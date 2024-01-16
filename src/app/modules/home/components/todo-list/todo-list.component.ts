@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, DoCheck } from '@angular/core';
 import { TaskList } from '../../model/task-list';
 
 @Component({
@@ -6,10 +6,14 @@ import { TaskList } from '../../model/task-list';
   templateUrl: './todo-list.component.html',
   styleUrl: './todo-list.component.scss'
 })
-export class TodoListComponent {
+export class TodoListComponent implements DoCheck {
   public taskList: Array<TaskList> = [];
 
   constructor() {}
+
+  ngDoCheck() {
+    this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked))
+  }
 
   public setEmmitTaskList(event: string) {
     this.taskList.push({task: event, checked: false})
@@ -25,5 +29,16 @@ export class TodoListComponent {
     if (confirm) {
       this.taskList = []
     }
+  }
+
+  public validationInput(event: string, index: number) {
+    if (!event.length){
+      const confirm = window.confirm("Task está vazia, deseja teletar?")
+
+      if(confirm) {
+        this.deleteItemTaskList(index);
+      }
+    }
+
   }
 }
