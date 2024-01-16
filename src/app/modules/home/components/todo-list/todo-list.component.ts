@@ -7,12 +7,12 @@ import { TaskList } from '../../model/task-list';
   styleUrl: './todo-list.component.scss'
 })
 export class TodoListComponent implements DoCheck {
-  public taskList: Array<TaskList> = [];
+  public taskList: Array<TaskList> = JSON.parse(localStorage.getItem("@list") || '[]');
 
   constructor() {}
 
   ngDoCheck() {
-    this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked))
+    this.setLocalStorage();
   }
 
   public setEmmitTaskList(event: string) {
@@ -40,5 +40,12 @@ export class TodoListComponent implements DoCheck {
       }
     }
 
+  }
+
+  public setLocalStorage() {
+    if(this.taskList) {
+      this.taskList.sort((first, last) => Number(first.checked) - Number(last.checked))
+      localStorage.setItem("@list", JSON.stringify(this.taskList))
+    }
   }
 }
