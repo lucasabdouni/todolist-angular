@@ -9,8 +9,7 @@ import { TodoListComponent } from './components/todo-list/todo-list.component';
 
 //Pages
 import { HomeComponent } from './pages/home/home.component';
-
-
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -21,7 +20,8 @@ import { HomeComponent } from './pages/home/home.component';
     HomeComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class HomeModule { }
